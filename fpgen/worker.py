@@ -50,7 +50,7 @@ from fpgen.jobs import (
     recover_interrupted,
     remove_expired,
 )
-from fpgen.render import render_layout
+from fpgen.render import RenderTooLarge, ensure_render_budget, render_layout
 from fpgen.settings import ConfigurationError, Settings, get_settings
 from fpgen.validate import validate_layout, validation_summary
 
@@ -291,15 +291,22 @@ def _write_artifacts(settings: Settings, job: JobRecord, layout: dict[str, Any])
         json.dumps(layout, indent=2),
         encoding="utf-8",
     )
+    dpi = _dpi(job.request_payload)
+    try:
+        ensure_render_budget(layout, dpi)
+    except RenderTooLarge as exc:
+        raise JobProcessingError("image_too_large", str(exc)) from exc
     try:
         render_layout(
             layout,
             str(staging / "plan"),
-            dpi=_dpi(job.request_payload),
+            dpi=dpi,
             title=_title(job.request_payload),
         )
     except JobProcessingError:
         raise
+    except RenderTooLarge as exc:
+        raise JobProcessingError("image_too_large", str(exc)) from exc
     except ValueError as exc:
         raise JobProcessingError("render_failed", str(exc)) from exc
     except OSError as exc:
@@ -314,6 +321,8 @@ def _dpi(payload: dict[str, Any]) -> int:
     dpi = payload.get("dpi", 170)
     if isinstance(dpi, bool) or not isinstance(dpi, int):
         raise JobProcessingError("invalid_request", "dpi must be an integer.")
+    if dpi < 72 or dpi > 300:
+        raise JobProcessingError("invalid_request", "dpi must be between 72 and 300.")
     return dpi
 
 
