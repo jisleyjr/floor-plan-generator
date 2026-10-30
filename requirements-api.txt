@@ -1,0 +1,6 @@
+# Service dependencies. The floor-plan CLI only needs requirements.txt.
+-r requirements.txt
+fastapi>=0.115
+uvicorn>=0.32
+SQLAlchemy>=2.0,<3
+alembic>=1.14

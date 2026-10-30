@@ -1,0 +1,2 @@
+# Optional driver for MySQL 8 and MariaDB. Not required for SQLite or the CLI.
+PyMySQL>=1.1
