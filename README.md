@@ -142,6 +142,28 @@ front or back, living room left or right, room/group order, mirroring, front-doo
 - `examples/` - hand-written valid layouts (rect cottage, L + garage) and deliberately broken ones
 - `samples/` - example outputs
 
+## HTTP service
+
+The command line above still works on its own and does not need a database or an API key.
+To serve plans over HTTP, use Python 3.12 on this computer (Docker is not required) and follow
+[docs/service.md](docs/service.md). With the virtualenv active and the variables from `.env` exported:
+
+```bash
+alembic upgrade head
+```
+
+Then run the API and the single worker in two terminals:
+
+```bash
+uvicorn fpgen.api:app --host 127.0.0.1 --port 8000 --workers 1
+python -m fpgen.worker
+```
+
+`GET /health` needs no key. Every other route needs `Authorization: Bearer $FLOORPLAN_API_KEY`.
+Import [docs/floor-plan-api.postman_collection.json](docs/floor-plan-api.postman_collection.json)
+and set `base_url` and `api_key`. Poll a job every two seconds until it succeeds or fails; polling
+does not submit the job again.
+
 ## Known limitations
 
 - Rooms are rectangles. The validator/renderer accept any rectilinear footprint (L, T, U ...), but the
