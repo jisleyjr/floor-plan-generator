@@ -22,6 +22,7 @@ Usage::
 from __future__ import annotations
 
 import json
+import math
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
 
@@ -76,6 +77,30 @@ class ValidationReport:
             lines.append("Layout is valid.")
         lines += [f"  warning: {w}" for w in self.warnings]
         return "\n".join(lines)
+
+
+def validation_summary(report: ValidationReport) -> dict:
+    """JSON-safe validity, messages, and area totals.
+
+    Door geometry and the footprint object are left out; those are not JSON.
+    """
+    return {
+        "ok": bool(report.ok),
+        "errors": list(report.errors),
+        "warnings": list(report.warnings),
+        "areas": {
+            "living_sqft": _json_number(report.living_sqft),
+            "garage_sqft": _json_number(report.garage_sqft),
+            "other_unconditioned_sqft": _json_number(report.other_unconditioned_sqft),
+        },
+    }
+
+
+def _json_number(value: float) -> float:
+    number = float(value)
+    if not math.isfinite(number):
+        raise ValueError("area totals must be finite")
+    return number
 
 
 def load_layout(path: str) -> dict:

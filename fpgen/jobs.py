@@ -260,6 +260,12 @@ def recover_interrupted(*, settings: Settings | None = None) -> list[JobRecord]:
         return records
 
 
+def known_job_ids(*, settings: Settings | None = None) -> set[uuid.UUID]:
+    """Return every job id still stored. Used to drop artifact directories."""
+    with session_scope(settings) as session:
+        return set(session.scalars(select(Job.id)).all())
+
+
 def remove_expired(
     *,
     now: datetime | None = None,
