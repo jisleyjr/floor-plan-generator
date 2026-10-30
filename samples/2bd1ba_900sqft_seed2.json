@@ -1,0 +1,240 @@
+{
+  "version": 1,
+  "units": "ft",
+  "title": "2 Bedroom / 1 Bath",
+  "footprint": {
+    "width": 30.0,
+    "depth": 30.0
+  },
+  "rooms": [
+    {
+      "id": "living-room",
+      "name": "Living Room",
+      "type": "living",
+      "x": 17.5,
+      "y": 0.0,
+      "w": 12.5,
+      "d": 14.5,
+      "target": {
+        "area": 200
+      }
+    },
+    {
+      "id": "hall",
+      "name": "Hall",
+      "type": "hallway",
+      "x": 0.0,
+      "y": 10.5,
+      "w": 17.5,
+      "d": 4.0
+    },
+    {
+      "id": "kitchen-dining",
+      "name": "Kitchen / Dining",
+      "type": "kitchen",
+      "x": 17.5,
+      "y": 14.5,
+      "w": 12.5,
+      "d": 15.5,
+      "target": {
+        "area": 186
+      }
+    },
+    {
+      "id": "bedroom-1",
+      "name": "Bedroom 1",
+      "type": "bedroom",
+      "x": 5.5,
+      "y": 14.5,
+      "w": 12.0,
+      "d": 15.5,
+      "target": {
+        "area": 170
+      }
+    },
+    {
+      "id": "bath-1",
+      "name": "Bath 1",
+      "type": "bathroom",
+      "x": 0.0,
+      "y": 14.5,
+      "w": 5.5,
+      "d": 8.5
+    },
+    {
+      "id": "closet",
+      "name": "Closet",
+      "type": "closet",
+      "x": 0.0,
+      "y": 23.0,
+      "w": 5.5,
+      "d": 7.0
+    },
+    {
+      "id": "linen",
+      "name": "Linen",
+      "type": "closet",
+      "x": 15.0,
+      "y": 7.0,
+      "w": 2.5,
+      "d": 3.5
+    },
+    {
+      "id": "closet-2",
+      "name": "Closet",
+      "type": "closet",
+      "x": 15.0,
+      "y": 0.0,
+      "w": 2.5,
+      "d": 7.0
+    },
+    {
+      "id": "bedroom-2",
+      "name": "Bedroom 2",
+      "type": "bedroom",
+      "x": 0.0,
+      "y": 0.0,
+      "w": 15.0,
+      "d": 10.5,
+      "target": {
+        "area": 120
+      }
+    }
+  ],
+  "doors": [
+    {
+      "from": "living-room",
+      "to": "kitchen-dining",
+      "type": "opening",
+      "width": 8.0,
+      "offset": 2.25
+    },
+    {
+      "from": "living-room",
+      "to": "hall",
+      "type": "opening",
+      "width": 3.5,
+      "offset": 0.25
+    },
+    {
+      "from": "bedroom-1",
+      "to": "closet",
+      "type": "sliding",
+      "width": 6.0,
+      "offset": 0.5
+    },
+    {
+      "from": "bedroom-2",
+      "to": "closet-2",
+      "type": "sliding",
+      "width": 6.0,
+      "offset": 0.5
+    },
+    {
+      "from": "hall",
+      "to": "bedroom-1",
+      "type": "door",
+      "width": 2.67,
+      "offset": 8.83,
+      "hinge": "end",
+      "swing_into": "bedroom-1"
+    },
+    {
+      "from": "hall",
+      "to": "bath-1",
+      "type": "door",
+      "width": 2.5,
+      "offset": 1.5,
+      "hinge": "start",
+      "swing_into": "bath-1"
+    },
+    {
+      "from": "hall",
+      "to": "linen",
+      "type": "door",
+      "width": 2.0,
+      "offset": 0.25,
+      "hinge": "start",
+      "swing_into": "linen"
+    },
+    {
+      "from": "hall",
+      "to": "bedroom-2",
+      "type": "door",
+      "width": 2.67,
+      "offset": 0.5,
+      "hinge": "start",
+      "swing_into": "bedroom-2"
+    },
+    {
+      "from": "living-room",
+      "to": "exterior",
+      "wall": "S",
+      "type": "door",
+      "width": 3.0,
+      "offset": 6.0,
+      "hinge": "start"
+    },
+    {
+      "from": "kitchen-dining",
+      "to": "exterior",
+      "wall": "N",
+      "type": "door",
+      "width": 3.0,
+      "offset": 9.0,
+      "hinge": "end"
+    }
+  ],
+  "windows": [
+    {
+      "room": "living-room",
+      "wall": "E",
+      "width": 5.0,
+      "offset": 4.75
+    },
+    {
+      "room": "kitchen-dining",
+      "wall": "N",
+      "width": 3.5,
+      "offset": 2.75
+    },
+    {
+      "room": "kitchen-dining",
+      "wall": "E",
+      "width": 3.5,
+      "offset": 6.0
+    },
+    {
+      "room": "bedroom-1",
+      "wall": "N",
+      "width": 3.0,
+      "offset": 4.5
+    },
+    {
+      "room": "bath-1",
+      "wall": "W",
+      "width": 2.0,
+      "offset": 3.25
+    },
+    {
+      "room": "bedroom-2",
+      "wall": "S",
+      "width": 3.0,
+      "offset": 6.0
+    },
+    {
+      "room": "bedroom-2",
+      "wall": "W",
+      "width": 3.0,
+      "offset": 3.75
+    }
+  ],
+  "meta": {
+    "generator": "fpgen strip-subdivision",
+    "seed": 2,
+    "beds": 2,
+    "baths": 1.0,
+    "requested_sqft": 900.0,
+    "actual_sqft": 900.0
+  }
+}

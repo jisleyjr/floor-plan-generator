@@ -1,0 +1,592 @@
+{
+  "version": 1,
+  "units": "ft",
+  "title": "5 Bedroom / 3 Bath + 3-Car Garage",
+  "footprint": {
+    "width": 113.0,
+    "depth": 37.0
+  },
+  "rooms": [
+    {
+      "id": "living-room",
+      "name": "Living Room",
+      "type": "living",
+      "x": 93.5,
+      "y": 0.0,
+      "w": 19.5,
+      "d": 21.5,
+      "target": {
+        "area": 420
+      }
+    },
+    {
+      "id": "hall",
+      "name": "Hall",
+      "type": "hallway",
+      "x": 32.0,
+      "y": 17.5,
+      "w": 61.5,
+      "d": 4.0
+    },
+    {
+      "id": "kitchen",
+      "name": "Kitchen",
+      "type": "kitchen",
+      "x": 94.5,
+      "y": 21.5,
+      "w": 18.5,
+      "d": 15.5,
+      "target": {
+        "area": 240
+      }
+    },
+    {
+      "id": "dining",
+      "name": "Dining",
+      "type": "dining",
+      "x": 79.0,
+      "y": 21.5,
+      "w": 15.5,
+      "d": 15.5,
+      "target": {
+        "area": 200
+      }
+    },
+    {
+      "id": "bedroom-5",
+      "name": "Bedroom 5",
+      "type": "bedroom",
+      "x": 64.0,
+      "y": 21.5,
+      "w": 15.0,
+      "d": 15.5,
+      "target": {
+        "area": 190
+      }
+    },
+    {
+      "id": "linen",
+      "name": "Linen",
+      "type": "closet",
+      "x": 61.5,
+      "y": 21.5,
+      "w": 2.5,
+      "d": 6.5
+    },
+    {
+      "id": "closet",
+      "name": "Closet",
+      "type": "closet",
+      "x": 61.5,
+      "y": 28.0,
+      "w": 2.5,
+      "d": 9.0
+    },
+    {
+      "id": "bedroom-1",
+      "name": "Bedroom 1",
+      "type": "bedroom",
+      "x": 40.5,
+      "y": 21.5,
+      "w": 21.0,
+      "d": 15.5,
+      "target": {
+        "area": 280
+      }
+    },
+    {
+      "id": "walk-in-closet",
+      "name": "Walk-in Closet",
+      "type": "walk_in_closet",
+      "x": 32.0,
+      "y": 21.5,
+      "w": 8.5,
+      "d": 7.0
+    },
+    {
+      "id": "bath-1",
+      "name": "Bath 1",
+      "type": "bathroom",
+      "x": 32.0,
+      "y": 28.5,
+      "w": 8.5,
+      "d": 8.5
+    },
+    {
+      "id": "laundry",
+      "name": "Laundry",
+      "type": "laundry",
+      "x": 87.0,
+      "y": 10.5,
+      "w": 6.5,
+      "d": 7.0
+    },
+    {
+      "id": "storage",
+      "name": "Storage",
+      "type": "storage",
+      "x": 87.0,
+      "y": 0.0,
+      "w": 6.5,
+      "d": 10.5
+    },
+    {
+      "id": "bath-3",
+      "name": "Bath 3",
+      "type": "bathroom",
+      "x": 81.0,
+      "y": 9.0,
+      "w": 6.0,
+      "d": 8.5
+    },
+    {
+      "id": "closet-2",
+      "name": "Closet",
+      "type": "closet",
+      "x": 81.0,
+      "y": 0.0,
+      "w": 6.0,
+      "d": 9.0
+    },
+    {
+      "id": "bedroom-3",
+      "name": "Bedroom 3",
+      "type": "bedroom",
+      "x": 67.5,
+      "y": 0.0,
+      "w": 13.5,
+      "d": 17.5,
+      "target": {
+        "area": 190
+      }
+    },
+    {
+      "id": "bath-2",
+      "name": "Bath 2",
+      "type": "bathroom",
+      "x": 61.5,
+      "y": 9.0,
+      "w": 6.0,
+      "d": 8.5
+    },
+    {
+      "id": "closet-3",
+      "name": "Closet",
+      "type": "closet",
+      "x": 61.5,
+      "y": 0.0,
+      "w": 6.0,
+      "d": 9.0
+    },
+    {
+      "id": "bedroom-2",
+      "name": "Bedroom 2",
+      "type": "bedroom",
+      "x": 48.0,
+      "y": 0.0,
+      "w": 13.5,
+      "d": 17.5,
+      "target": {
+        "area": 190
+      }
+    },
+    {
+      "id": "bedroom-4",
+      "name": "Bedroom 4",
+      "type": "bedroom",
+      "x": 34.5,
+      "y": 0.0,
+      "w": 13.5,
+      "d": 17.5,
+      "target": {
+        "area": 190
+      }
+    },
+    {
+      "id": "linen-2",
+      "name": "Linen",
+      "type": "closet",
+      "x": 32.0,
+      "y": 9.0,
+      "w": 2.5,
+      "d": 8.5
+    },
+    {
+      "id": "closet-4",
+      "name": "Closet",
+      "type": "closet",
+      "x": 32.0,
+      "y": 0.0,
+      "w": 2.5,
+      "d": 9.0
+    },
+    {
+      "id": "garage",
+      "name": "Garage",
+      "type": "garage",
+      "x": 0.0,
+      "y": 0.0,
+      "w": 32.0,
+      "d": 27.0,
+      "conditioned": false,
+      "cars": 3
+    },
+    {
+      "id": "garage-storage",
+      "name": "Storage",
+      "type": "storage",
+      "x": 0.0,
+      "y": 27.0,
+      "w": 32.0,
+      "d": 10.0,
+      "conditioned": false
+    }
+  ],
+  "doors": [
+    {
+      "from": "living-room",
+      "to": "kitchen",
+      "type": "opening",
+      "width": 8.0,
+      "offset": 5.25
+    },
+    {
+      "from": "kitchen",
+      "to": "dining",
+      "type": "opening",
+      "width": 8.0,
+      "offset": 3.75
+    },
+    {
+      "from": "living-room",
+      "to": "hall",
+      "type": "opening",
+      "width": 3.5,
+      "offset": 0.25
+    },
+    {
+      "from": "bedroom-5",
+      "to": "closet",
+      "type": "sliding",
+      "width": 6.0,
+      "offset": 1.5
+    },
+    {
+      "from": "bedroom-1",
+      "to": "walk-in-closet",
+      "type": "door",
+      "width": 2.33,
+      "offset": 2.335,
+      "hinge": "start",
+      "swing_into": "walk-in-closet"
+    },
+    {
+      "from": "bedroom-1",
+      "to": "bath-1",
+      "type": "door",
+      "width": 2.5,
+      "offset": 3.0,
+      "hinge": "start",
+      "swing_into": "bath-1"
+    },
+    {
+      "from": "laundry",
+      "to": "storage",
+      "type": "door",
+      "width": 2.33,
+      "offset": 2.085,
+      "hinge": "start",
+      "swing_into": "storage"
+    },
+    {
+      "from": "bedroom-3",
+      "to": "closet-2",
+      "type": "sliding",
+      "width": 6.0,
+      "offset": 1.5
+    },
+    {
+      "from": "bedroom-2",
+      "to": "closet-3",
+      "type": "sliding",
+      "width": 6.0,
+      "offset": 1.5
+    },
+    {
+      "from": "bedroom-4",
+      "to": "closet-4",
+      "type": "sliding",
+      "width": 6.0,
+      "offset": 1.5
+    },
+    {
+      "from": "hall",
+      "to": "bedroom-5",
+      "type": "door",
+      "width": 2.67,
+      "offset": 11.83,
+      "hinge": "end",
+      "swing_into": "bedroom-5"
+    },
+    {
+      "from": "hall",
+      "to": "linen",
+      "type": "door",
+      "width": 2.0,
+      "offset": 0.25,
+      "hinge": "start",
+      "swing_into": "linen"
+    },
+    {
+      "from": "hall",
+      "to": "bedroom-1",
+      "type": "door",
+      "width": 2.67,
+      "offset": 17.83,
+      "hinge": "end",
+      "swing_into": "bedroom-1"
+    },
+    {
+      "from": "hall",
+      "to": "laundry",
+      "type": "door",
+      "width": 2.5,
+      "offset": 2.0,
+      "hinge": "start",
+      "swing_into": "laundry"
+    },
+    {
+      "from": "hall",
+      "to": "bath-3",
+      "type": "door",
+      "width": 2.5,
+      "offset": 1.75,
+      "hinge": "start",
+      "swing_into": "bath-3"
+    },
+    {
+      "from": "hall",
+      "to": "bedroom-3",
+      "type": "door",
+      "width": 2.67,
+      "offset": 0.5,
+      "hinge": "start",
+      "swing_into": "bedroom-3"
+    },
+    {
+      "from": "hall",
+      "to": "bath-2",
+      "type": "door",
+      "width": 2.5,
+      "offset": 1.75,
+      "hinge": "start",
+      "swing_into": "bath-2"
+    },
+    {
+      "from": "hall",
+      "to": "bedroom-2",
+      "type": "door",
+      "width": 2.67,
+      "offset": 0.5,
+      "hinge": "start",
+      "swing_into": "bedroom-2"
+    },
+    {
+      "from": "hall",
+      "to": "bedroom-4",
+      "type": "door",
+      "width": 2.67,
+      "offset": 10.33,
+      "hinge": "end",
+      "swing_into": "bedroom-4"
+    },
+    {
+      "from": "hall",
+      "to": "linen-2",
+      "type": "door",
+      "width": 2.0,
+      "offset": 0.25,
+      "hinge": "start",
+      "swing_into": "linen-2"
+    },
+    {
+      "from": "living-room",
+      "to": "exterior",
+      "wall": "S",
+      "type": "door",
+      "width": 3.0,
+      "offset": 8.5,
+      "hinge": "start"
+    },
+    {
+      "from": "kitchen",
+      "to": "exterior",
+      "wall": "N",
+      "type": "door",
+      "width": 3.0,
+      "offset": 15.0,
+      "hinge": "end"
+    },
+    {
+      "from": "garage",
+      "to": "hall",
+      "type": "door",
+      "width": 3.0,
+      "offset": 0.5,
+      "hinge": "start",
+      "swing_into": "garage"
+    },
+    {
+      "from": "garage",
+      "to": "exterior",
+      "wall": "S",
+      "type": "garage",
+      "width": 16.0,
+      "offset": 2.0
+    },
+    {
+      "from": "garage",
+      "to": "exterior",
+      "wall": "S",
+      "type": "garage",
+      "width": 9.0,
+      "offset": 21.0
+    },
+    {
+      "from": "garage",
+      "to": "exterior",
+      "wall": "W",
+      "type": "door",
+      "width": 3.0,
+      "offset": 22.5,
+      "hinge": "end"
+    },
+    {
+      "from": "garage",
+      "to": "garage-storage",
+      "type": "door",
+      "width": 2.67,
+      "offset": 14.665,
+      "hinge": "start",
+      "swing_into": "garage-storage"
+    }
+  ],
+  "windows": [
+    {
+      "room": "living-room",
+      "wall": "S",
+      "width": 5.0,
+      "offset": 1.75
+    },
+    {
+      "room": "living-room",
+      "wall": "S",
+      "width": 5.0,
+      "offset": 13.0
+    },
+    {
+      "room": "living-room",
+      "wall": "E",
+      "width": 5.0,
+      "offset": 3.375
+    },
+    {
+      "room": "living-room",
+      "wall": "E",
+      "width": 5.0,
+      "offset": 13.125
+    },
+    {
+      "room": "kitchen",
+      "wall": "N",
+      "width": 3.5,
+      "offset": 5.75
+    },
+    {
+      "room": "kitchen",
+      "wall": "E",
+      "width": 3.5,
+      "offset": 6.0
+    },
+    {
+      "room": "dining",
+      "wall": "N",
+      "width": 4.0,
+      "offset": 2.375
+    },
+    {
+      "room": "dining",
+      "wall": "N",
+      "width": 4.0,
+      "offset": 9.125
+    },
+    {
+      "room": "bedroom-5",
+      "wall": "N",
+      "width": 3.0,
+      "offset": 2.75
+    },
+    {
+      "room": "bedroom-5",
+      "wall": "N",
+      "width": 3.0,
+      "offset": 9.25
+    },
+    {
+      "room": "bedroom-1",
+      "wall": "N",
+      "width": 3.0,
+      "offset": 4.25
+    },
+    {
+      "room": "bedroom-1",
+      "wall": "N",
+      "width": 3.0,
+      "offset": 13.75
+    },
+    {
+      "room": "bath-1",
+      "wall": "N",
+      "width": 2.0,
+      "offset": 3.25
+    },
+    {
+      "room": "bedroom-3",
+      "wall": "S",
+      "width": 3.0,
+      "offset": 5.25
+    },
+    {
+      "room": "bedroom-2",
+      "wall": "S",
+      "width": 3.0,
+      "offset": 5.25
+    },
+    {
+      "room": "bedroom-4",
+      "wall": "S",
+      "width": 3.0,
+      "offset": 5.25
+    },
+    {
+      "room": "garage",
+      "wall": "W",
+      "width": 3.0,
+      "offset": 9.75
+    }
+  ],
+  "meta": {
+    "generator": "fpgen strip-subdivision + wing",
+    "seed": 2,
+    "beds": 5,
+    "baths": 3.0,
+    "requested_sqft": 3000.0,
+    "shape": "rect",
+    "garage_cars": 3,
+    "garage_side": "left",
+    "living_sqft": 2997.0,
+    "garage_sqft": 864.0,
+    "garage_storage_sqft": 320.0,
+    "total_footprint_sqft": 4181.0
+  }
+}

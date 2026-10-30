@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "title": "Deliberately broken layout (validator test)",
+  "footprint": {"width": 30, "depth": 30},
+  "rooms": [
+    {"id": "living",  "name": "Living Room", "type": "living",   "x": 0,  "y": 0,  "w": 16, "d": 14},
+    {"id": "kitchen", "name": "Kitchen",     "type": "kitchen",  "x": 16, "y": 0,  "w": 14, "d": 14},
+    {"id": "hall",    "name": "Hall",        "type": "hallway",  "x": 0,  "y": 14, "w": 30, "d": 4},
+    {"id": "bed1",    "name": "Bedroom 1",   "type": "bedroom",  "x": 0,  "y": 18, "w": 13, "d": 12},
+    {"id": "bath",    "name": "Bath",        "type": "bathroom", "x": 13, "y": 18, "w": 6,  "d": 12},
+    {"id": "bed2",    "name": "Bedroom 2",   "type": "bedroom",  "x": 18, "y": 18, "w": 11, "d": 12},
+    {"id": "office",  "name": "Office",      "type": "office",   "x": 25, "y": 25, "w": 8,  "d": 8},
+    {"id": "nook",    "name": "Nook",        "type": "bedroom",  "x": 5,  "y": 5,  "w": 5,  "d": 5}
+  ],
+  "doors": [
+    {"from": "living", "to": "exterior", "wall": "S", "width": 3, "offset": 2},
+    {"from": "living", "to": "kitchen", "type": "opening", "width": 8},
+    {"from": "living", "to": "hall", "type": "opening", "width": 6, "offset": 9},
+    {"from": "hall", "to": "bed1", "width": 2.67},
+    {"from": "bed1", "to": "bed2", "width": 2.67},
+    {"from": "hall", "to": "garage", "width": 2.67},
+    {"from": "hall", "to": "bath", "width": 9}
+  ],
+  "windows": [
+    {"room": "bed1", "wall": "E", "width": 3},
+    {"room": "living", "wall": "S", "width": 5, "offset": 3}
+  ]
+}

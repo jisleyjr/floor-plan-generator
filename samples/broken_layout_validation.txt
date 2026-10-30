@@ -1,0 +1,19 @@
+INVALID layout: 11 error(s)
+  ERROR: room 'Office' (25,25)-(33,33) is outside the 30' x 30' footprint (39.0 sq ft outside)
+  ERROR: rooms 'Living Room' and 'Nook' overlap by 25.0 sq ft in (5,5)-(10,10)
+  ERROR: rooms 'Bath' and 'Bedroom 2' overlap by 12.0 sq ft in (18,18)-(19,30)
+  ERROR: rooms 'Bedroom 2' and 'Office' overlap by 20.0 sq ft in (25,25)-(29,30)
+  ERROR: bedroom 'Nook' is too small (5' x 5' = 25 sq ft; minimum 70 sq ft and 7' in each direction)
+  ERROR: door #4 (bed1 -> bed2): rooms 'Bedroom 1' and 'Bedroom 2' do not share a wall
+  ERROR: door #5 (hall -> garage): unknown room 'garage'
+  ERROR: door #6 (hall -> bath): 9' door does not fit on the 6' shared wall
+  ERROR: window #0 (bed1, E): the E wall of 'Bedroom 1' is not an exterior wall
+  ERROR: window #1 (living, S): window overlaps a door
+  ERROR: unreachable from any exterior door: 'Bath', 'Bedroom 2', 'Office', 'Nook'
+  warning: 'Living Room' touches an exterior wall but has no window
+  warning: 'Kitchen' touches an exterior wall but has no window
+  warning: 'Bedroom 1' touches an exterior wall but has no window (bedrooms need an egress window)
+  warning: 'Bedroom 2' touches an exterior wall but has no window (bedrooms need an egress window)
+  warning: 'Office' touches an exterior wall but has no window
+  warning: bedroom 'Nook' has no exterior wall, so no egress window is possible
+  warning: no full bathroom is reachable without walking through a bedroom

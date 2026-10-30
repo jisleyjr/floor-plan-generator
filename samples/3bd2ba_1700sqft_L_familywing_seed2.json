@@ -1,0 +1,414 @@
+{
+  "version": 1,
+  "units": "ft",
+  "title": "3 Bedroom / 2 Bath",
+  "footprint": {
+    "width": 61.0,
+    "depth": 30.0,
+    "rects": [
+      {
+        "x": 0.0,
+        "y": -0.0,
+        "w": 47.0,
+        "d": 30.0
+      },
+      {
+        "x": 47.0,
+        "y": 0.0,
+        "w": 14.0,
+        "d": 21.0
+      }
+    ]
+  },
+  "rooms": [
+    {
+      "id": "living-room",
+      "name": "Living Room",
+      "type": "living",
+      "x": 35.0,
+      "y": 0.0,
+      "w": 12.0,
+      "d": 17.5,
+      "target": {
+        "area": 213
+      }
+    },
+    {
+      "id": "hall",
+      "name": "Hall",
+      "type": "hallway",
+      "x": 0.0,
+      "y": 13.5,
+      "w": 35.0,
+      "d": 4.0
+    },
+    {
+      "id": "dining",
+      "name": "Dining",
+      "type": "dining",
+      "x": 35.5,
+      "y": 17.5,
+      "w": 11.5,
+      "d": 12.5,
+      "target": {
+        "area": 110
+      }
+    },
+    {
+      "id": "kitchen",
+      "name": "Kitchen",
+      "type": "kitchen",
+      "x": 24.0,
+      "y": 17.5,
+      "w": 11.5,
+      "d": 12.5,
+      "target": {
+        "area": 121
+      }
+    },
+    {
+      "id": "walk-in-closet",
+      "name": "Walk-in Closet",
+      "type": "walk_in_closet",
+      "x": 15.5,
+      "y": 17.5,
+      "w": 8.5,
+      "d": 4.0
+    },
+    {
+      "id": "bath-1",
+      "name": "Bath 1",
+      "type": "bathroom",
+      "x": 15.5,
+      "y": 21.5,
+      "w": 8.5,
+      "d": 8.5
+    },
+    {
+      "id": "bedroom-1",
+      "name": "Bedroom 1",
+      "type": "bedroom",
+      "x": 0.0,
+      "y": 17.5,
+      "w": 15.5,
+      "d": 12.5,
+      "target": {
+        "area": 170
+      }
+    },
+    {
+      "id": "laundry",
+      "name": "Laundry",
+      "type": "laundry",
+      "x": 29.0,
+      "y": 6.5,
+      "w": 6.0,
+      "d": 7.0
+    },
+    {
+      "id": "storage",
+      "name": "Storage",
+      "type": "storage",
+      "x": 29.0,
+      "y": 0.0,
+      "w": 6.0,
+      "d": 6.5
+    },
+    {
+      "id": "bath-2",
+      "name": "Bath 2",
+      "type": "bathroom",
+      "x": 23.5,
+      "y": 5.0,
+      "w": 5.5,
+      "d": 8.5
+    },
+    {
+      "id": "closet",
+      "name": "Closet",
+      "type": "closet",
+      "x": 23.5,
+      "y": 0.0,
+      "w": 5.5,
+      "d": 5.0
+    },
+    {
+      "id": "bedroom-2",
+      "name": "Bedroom 2",
+      "type": "bedroom",
+      "x": 13.0,
+      "y": 0.0,
+      "w": 10.5,
+      "d": 13.5,
+      "target": {
+        "area": 121
+      }
+    },
+    {
+      "id": "bedroom-3",
+      "name": "Bedroom 3",
+      "type": "bedroom",
+      "x": 2.5,
+      "y": 0.0,
+      "w": 10.5,
+      "d": 13.5,
+      "target": {
+        "area": 121
+      }
+    },
+    {
+      "id": "linen",
+      "name": "Linen",
+      "type": "closet",
+      "x": 0.0,
+      "y": 9.0,
+      "w": 2.5,
+      "d": 4.5
+    },
+    {
+      "id": "closet-2",
+      "name": "Closet",
+      "type": "closet",
+      "x": 0.0,
+      "y": 0.0,
+      "w": 2.5,
+      "d": 9.0
+    },
+    {
+      "id": "family-room",
+      "name": "Family Room",
+      "type": "family",
+      "x": 47.0,
+      "y": 0.0,
+      "w": 14.0,
+      "d": 21.0,
+      "target": {
+        "area": 294
+      }
+    }
+  ],
+  "doors": [
+    {
+      "from": "living-room",
+      "to": "dining",
+      "type": "opening",
+      "width": 8.0,
+      "offset": 1.75
+    },
+    {
+      "from": "dining",
+      "to": "kitchen",
+      "type": "opening",
+      "width": 8.0,
+      "offset": 2.25
+    },
+    {
+      "from": "living-room",
+      "to": "hall",
+      "type": "opening",
+      "width": 3.5,
+      "offset": 0.25
+    },
+    {
+      "from": "bedroom-1",
+      "to": "walk-in-closet",
+      "type": "door",
+      "width": 2.33,
+      "offset": 0.835,
+      "hinge": "start",
+      "swing_into": "walk-in-closet"
+    },
+    {
+      "from": "bedroom-1",
+      "to": "bath-1",
+      "type": "door",
+      "width": 2.5,
+      "offset": 3.0,
+      "hinge": "start",
+      "swing_into": "bath-1"
+    },
+    {
+      "from": "laundry",
+      "to": "storage",
+      "type": "door",
+      "width": 2.33,
+      "offset": 1.835,
+      "hinge": "start",
+      "swing_into": "storage"
+    },
+    {
+      "from": "bedroom-2",
+      "to": "closet",
+      "type": "sliding",
+      "width": 4.0,
+      "offset": 0.5
+    },
+    {
+      "from": "bedroom-3",
+      "to": "closet-2",
+      "type": "sliding",
+      "width": 6.0,
+      "offset": 1.5
+    },
+    {
+      "from": "hall",
+      "to": "bedroom-1",
+      "type": "door",
+      "width": 2.67,
+      "offset": 0.5,
+      "hinge": "start",
+      "swing_into": "bedroom-1"
+    },
+    {
+      "from": "hall",
+      "to": "laundry",
+      "type": "door",
+      "width": 2.5,
+      "offset": 1.75,
+      "hinge": "start",
+      "swing_into": "laundry"
+    },
+    {
+      "from": "hall",
+      "to": "bath-2",
+      "type": "door",
+      "width": 2.5,
+      "offset": 1.5,
+      "hinge": "start",
+      "swing_into": "bath-2"
+    },
+    {
+      "from": "hall",
+      "to": "bedroom-2",
+      "type": "door",
+      "width": 2.67,
+      "offset": 0.5,
+      "hinge": "start",
+      "swing_into": "bedroom-2"
+    },
+    {
+      "from": "hall",
+      "to": "bedroom-3",
+      "type": "door",
+      "width": 2.67,
+      "offset": 7.33,
+      "hinge": "end",
+      "swing_into": "bedroom-3"
+    },
+    {
+      "from": "hall",
+      "to": "linen",
+      "type": "door",
+      "width": 2.0,
+      "offset": 0.25,
+      "hinge": "start",
+      "swing_into": "linen"
+    },
+    {
+      "from": "living-room",
+      "to": "exterior",
+      "wall": "S",
+      "type": "door",
+      "width": 3.0,
+      "offset": 5.0,
+      "hinge": "start"
+    },
+    {
+      "from": "kitchen",
+      "to": "exterior",
+      "wall": "N",
+      "type": "door",
+      "width": 3.0,
+      "offset": 8.0,
+      "hinge": "end"
+    },
+    {
+      "from": "living-room",
+      "to": "family-room",
+      "type": "opening",
+      "width": 8.0
+    }
+  ],
+  "windows": [
+    {
+      "room": "dining",
+      "wall": "N",
+      "width": 4.0,
+      "offset": 3.75
+    },
+    {
+      "room": "dining",
+      "wall": "E",
+      "width": 4.0,
+      "offset": 4.25
+    },
+    {
+      "room": "kitchen",
+      "wall": "N",
+      "width": 3.5,
+      "offset": 2.25
+    },
+    {
+      "room": "bath-1",
+      "wall": "N",
+      "width": 2.0,
+      "offset": 3.25
+    },
+    {
+      "room": "bedroom-1",
+      "wall": "N",
+      "width": 3.0,
+      "offset": 6.25
+    },
+    {
+      "room": "bedroom-1",
+      "wall": "W",
+      "width": 3.0,
+      "offset": 4.75
+    },
+    {
+      "room": "bedroom-2",
+      "wall": "S",
+      "width": 3.0,
+      "offset": 3.75
+    },
+    {
+      "room": "bedroom-3",
+      "wall": "S",
+      "width": 3.0,
+      "offset": 3.75
+    },
+    {
+      "room": "family-room",
+      "wall": "S",
+      "width": 5.0,
+      "offset": 4.5
+    },
+    {
+      "room": "family-room",
+      "wall": "N",
+      "width": 5.0,
+      "offset": 4.5
+    },
+    {
+      "room": "family-room",
+      "wall": "E",
+      "width": 5.0,
+      "offset": 8.0
+    }
+  ],
+  "meta": {
+    "generator": "fpgen strip-subdivision + wing",
+    "seed": 2,
+    "beds": 3,
+    "baths": 2.0,
+    "requested_sqft": 1700.0,
+    "shape": "L",
+    "garage_cars": 0,
+    "garage_side": "right",
+    "living_sqft": 1704.0,
+    "garage_sqft": 0.0,
+    "garage_storage_sqft": 0.0,
+    "total_footprint_sqft": 1704.0
+  }
+}

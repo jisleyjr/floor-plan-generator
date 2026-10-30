@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "units": "ft",
+  "title": "2 Bedroom Cottage (hand-written example)",
+  "footprint": {"width": 30, "depth": 30},
+  "rooms": [
+    {"id": "living",  "name": "Living Room", "type": "living",   "x": 0,  "y": 0,  "w": 16, "d": 14, "target": {"area": 220}},
+    {"id": "kitchen", "name": "Kitchen",     "type": "kitchen",  "x": 16, "y": 0,  "w": 14, "d": 14},
+    {"id": "hall",    "name": "Hall",        "type": "hallway",  "x": 0,  "y": 14, "w": 30, "d": 4},
+    {"id": "bed1",    "name": "Bedroom 1",   "type": "bedroom",  "x": 0,  "y": 18, "w": 13, "d": 12},
+    {"id": "bath",    "name": "Bath",        "type": "bathroom", "x": 13, "y": 18, "w": 6,  "d": 12},
+    {"id": "bed2",    "name": "Bedroom 2",   "type": "bedroom",  "x": 19, "y": 18, "w": 11, "d": 12}
+  ],
+  "doors": [
+    {"from": "living", "to": "exterior", "wall": "S", "width": 3, "offset": 2},
+    {"from": "kitchen", "to": "exterior", "wall": "E", "width": 3, "offset": 9, "hinge": "end"},
+    {"from": "living", "to": "kitchen", "type": "opening", "width": 8},
+    {"from": "living", "to": "hall", "type": "opening", "width": 6, "offset": 9},
+    {"from": "hall", "to": "bed1", "width": 2.67, "offset": 9.8, "hinge": "end"},
+    {"from": "hall", "to": "bath", "width": 2.5},
+    {"from": "hall", "to": "bed2", "width": 2.67, "offset": 0.5}
+  ],
+  "windows": [
+    {"room": "living", "wall": "S", "width": 5, "offset": 8},
+    {"room": "living", "wall": "W", "width": 4},
+    {"room": "kitchen", "wall": "S", "width": 4},
+    {"room": "bed1", "wall": "N", "width": 3},
+    {"room": "bed1", "wall": "W", "width": 3},
+    {"room": "bath", "wall": "N", "width": 2},
+    {"room": "bed2", "wall": "N", "width": 3},
+    {"room": "bed2", "wall": "E", "width": 3}
+  ]
+}

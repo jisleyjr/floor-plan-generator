@@ -1,0 +1,9 @@
+INVALID layout: 8 error(s)
+  ERROR: room 'Patio' (44,24)-(54,30) is outside the 62' x 30' (2-rectangle) footprint (60.0 sq ft outside)
+  ERROR: rooms do not fill the footprint: 24.0 sq ft uncovered e.g. near (38.25, 0.25)
+  ERROR: door #8 (garage -> mud): rooms 'Garage' and 'Laundry / Mudroom' do not share a wall
+  ERROR: door #11 (bed3 -> garage): a bedroom may not open directly into a garage
+  ERROR: door #12 (kitchen -> exterior): overhead 'garage' doors are only allowed on a garage
+  ERROR: door #13 (bed3 -> exterior): the door (16.5..19.5) is not on the exterior part of the E wall of 'Bedroom 3' (exterior portion(s): 22..30)
+  ERROR: window #8 (bed3, E): window (17..20) is not on the exterior part of that wall (exterior portion(s): 22..30)
+  ERROR: unreachable from any exterior door: 'Patio'

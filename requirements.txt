@@ -1,0 +1,2 @@
+# Only runtime dependency (pulls in numpy, pillow, etc. automatically).
+matplotlib>=3.8
