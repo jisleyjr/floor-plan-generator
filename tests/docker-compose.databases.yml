@@ -1,0 +1,34 @@
+# Disposable MySQL 8.4 and MariaDB 11.4 for the portability tests.
+# The floor-plan service does not start Docker. pytest starts these containers
+# and removes them when the session ends.
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: floorplan-test
+    ports:
+      - "127.0.0.1::3306"
+    tmpfs:
+      - /var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-pfloorplan-test"]
+      interval: 2s
+      timeout: 5s
+      retries: 40
+      start_period: 10s
+
+  mariadb:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: floorplan-test
+    ports:
+      - "127.0.0.1::3306"
+    tmpfs:
+      - /var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 2s
+      timeout: 5s
+      retries: 40
+      start_period: 10s
