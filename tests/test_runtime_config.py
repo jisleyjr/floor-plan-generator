@@ -130,17 +130,50 @@ def test_health_is_reachable_without_credentials(monkeypatch: pytest.MonkeyPatch
 
 
 def test_worker_starts_without_an_api_key(tmp_path: Path) -> None:
+    import selectors
+    import signal
+    import time
+
     data_dir = tmp_path / "runtime"
-    result = subprocess.run(
-        [sys.executable, "-m", "fpgen.worker"],
+    database = data_dir / "floorplan.sqlite"
+    url = "sqlite:///" + database.as_posix()
+    migrated = subprocess.run(
+        [sys.executable, "-m", "alembic", "upgrade", "head"],
         cwd=ROOT,
-        env=_env(FLOORPLAN_DATA_DIR=str(data_dir)),
+        env=_env(DATABASE_URL=url, FLOORPLAN_DATA_DIR=str(data_dir)),
         capture_output=True,
         text=True,
     )
+    assert migrated.returncode == 0, migrated.stderr
 
-    assert result.returncode == 0, result.stderr
-    assert (data_dir / "floorplan.sqlite").is_file()
+    proc = subprocess.Popen(
+        [sys.executable, "-u", "-m", "fpgen.worker"],
+        cwd=ROOT,
+        env=_env(DATABASE_URL=url, FLOORPLAN_DATA_DIR=str(data_dir)),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    assert proc.stderr is not None
+    selector = selectors.DefaultSelector()
+    selector.register(proc.stderr, selectors.EVENT_READ)
+    collected = ""
+    deadline = time.monotonic() + 10
+    while time.monotonic() < deadline and "Floor plan worker ready" not in collected:
+        if proc.poll() is not None:
+            break
+        events = selector.select(timeout=0.2)
+        if not events:
+            continue
+        collected += proc.stderr.readline()
+    assert "Floor plan worker ready" in collected, collected
+    assert "multiple worker processes are outside this version" in collected
+    proc.send_signal(signal.SIGTERM)
+    stdout, rest = proc.communicate(timeout=10)
+    assert proc.returncode == 0, rest
+    assert "FLOORPLAN_API_KEY" not in (collected + rest)
+    assert "Traceback" not in (collected + rest + stdout)
+    assert database.is_file()
 
 
 def test_alembic_upgrade_uses_database_url(tmp_path: Path) -> None:
