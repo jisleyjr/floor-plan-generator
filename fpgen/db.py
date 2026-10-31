@@ -34,9 +34,12 @@ def ensure_sqlite_parent(url: str) -> None:
 
 
 def connect_args(url: str) -> dict[str, object]:
+    """SQLite driver settings. Queue code must not repeat these."""
     parsed = make_url(url)
     if parsed.drivername.startswith("sqlite"):
-        return {"check_same_thread": False}
+        # timeout is how long sqlite3 waits, in seconds, when another
+        # connection holds the write lock (enqueue admission uses that lock).
+        return {"check_same_thread": False, "timeout": 30}
     return {}
 
 

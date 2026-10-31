@@ -163,15 +163,21 @@ def test_alembic_upgrade_uses_database_url(tmp_path: Path) -> None:
     with sqlite3.connect(database) as connection:
         tables = {row[0] for row in connection.execute("SELECT name FROM sqlite_master WHERE type='table'")}
     assert "alembic_version" in tables
-    assert "jobs" not in tables
+    assert "jobs" in tables
+    assert "queue_coordination" in tables
 
 
-def test_skeleton_modules_import_without_tables() -> None:
+def test_model_metadata_describes_the_queue_without_creating_tables(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    monkeypatch.setenv("FLOORPLAN_DATA_DIR", str(tmp_path / "runtime"))
     import fpgen.jobs
     import fpgen.models
 
     assert fpgen.jobs.__doc__
-    assert fpgen.models.Base.metadata.tables == {}
+    assert "jobs" in fpgen.models.Base.metadata.tables
+    assert "queue_coordination" in fpgen.models.Base.metadata.tables
+    assert not (tmp_path / "runtime").exists()
 
 
 def test_floorplan_library_import_does_not_require_an_api_key() -> None:
