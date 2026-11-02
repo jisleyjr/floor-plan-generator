@@ -1,0 +1,194 @@
+{
+  "info": {
+    "name": "Floor Plan API",
+    "description": "Set the collection variables base_url and api_key. Generate stores job_id. Poll every two seconds until status is succeeded or failed. Polling does not submit a new job. GET /health does not send the API key.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{api_key}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "api_key",
+      "value": ""
+    },
+    {
+      "key": "job_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/health",
+        "description": "No API key. Confirms the API process is up.",
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Generate",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{api_key}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/v1/jobs/generate",
+        "description": "Queue a rectangular 3-bed plan. The response is 202 and the drawing happens in the worker. Poll every two seconds.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"beds\": 3,\n  \"baths\": 2,\n  \"sqft\": 1600,\n  \"seed\": 1\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "pm.collectionVariables.set('job_id', body.id);",
+              "pm.test('accepted', function () { pm.response.to.have.status(202); });",
+              "pm.test('queued', function () { pm.expect(body.status).to.eql('queued'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Render",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{api_key}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/v1/jobs/render",
+        "description": "Queue a drawing of the hand-written cottage layout. Invalid layouts return 422 and are not queued.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"layout\": {\n    \"version\": 1,\n    \"units\": \"ft\",\n    \"title\": \"2 Bedroom Cottage (hand-written example)\",\n    \"footprint\": {\n      \"width\": 30,\n      \"depth\": 30\n    },\n    \"rooms\": [\n      {\n        \"id\": \"living\",\n        \"name\": \"Living Room\",\n        \"type\": \"living\",\n        \"x\": 0,\n        \"y\": 0,\n        \"w\": 16,\n        \"d\": 14,\n        \"target\": {\n          \"area\": 220\n        }\n      },\n      {\n        \"id\": \"kitchen\",\n        \"name\": \"Kitchen\",\n        \"type\": \"kitchen\",\n        \"x\": 16,\n        \"y\": 0,\n        \"w\": 14,\n        \"d\": 14\n      },\n      {\n        \"id\": \"hall\",\n        \"name\": \"Hall\",\n        \"type\": \"hallway\",\n        \"x\": 0,\n        \"y\": 14,\n        \"w\": 30,\n        \"d\": 4\n      },\n      {\n        \"id\": \"bed1\",\n        \"name\": \"Bedroom 1\",\n        \"type\": \"bedroom\",\n        \"x\": 0,\n        \"y\": 18,\n        \"w\": 13,\n        \"d\": 12\n      },\n      {\n        \"id\": \"bath\",\n        \"name\": \"Bath\",\n        \"type\": \"bathroom\",\n        \"x\": 13,\n        \"y\": 18,\n        \"w\": 6,\n        \"d\": 12\n      },\n      {\n        \"id\": \"bed2\",\n        \"name\": \"Bedroom 2\",\n        \"type\": \"bedroom\",\n        \"x\": 19,\n        \"y\": 18,\n        \"w\": 11,\n        \"d\": 12\n      }\n    ],\n    \"doors\": [\n      {\n        \"from\": \"living\",\n        \"to\": \"exterior\",\n        \"wall\": \"S\",\n        \"width\": 3,\n        \"offset\": 2\n      },\n      {\n        \"from\": \"kitchen\",\n        \"to\": \"exterior\",\n        \"wall\": \"E\",\n        \"width\": 3,\n        \"offset\": 9,\n        \"hinge\": \"end\"\n      },\n      {\n        \"from\": \"living\",\n        \"to\": \"kitchen\",\n        \"type\": \"opening\",\n        \"width\": 8\n      },\n      {\n        \"from\": \"living\",\n        \"to\": \"hall\",\n        \"type\": \"opening\",\n        \"width\": 6,\n        \"offset\": 9\n      },\n      {\n        \"from\": \"hall\",\n        \"to\": \"bed1\",\n        \"width\": 2.67,\n        \"offset\": 9.8,\n        \"hinge\": \"end\"\n      },\n      {\n        \"from\": \"hall\",\n        \"to\": \"bath\",\n        \"width\": 2.5\n      },\n      {\n        \"from\": \"hall\",\n        \"to\": \"bed2\",\n        \"width\": 2.67,\n        \"offset\": 0.5\n      }\n    ],\n    \"windows\": [\n      {\n        \"room\": \"living\",\n        \"wall\": \"S\",\n        \"width\": 5,\n        \"offset\": 8\n      },\n      {\n        \"room\": \"living\",\n        \"wall\": \"W\",\n        \"width\": 4\n      },\n      {\n        \"room\": \"kitchen\",\n        \"wall\": \"S\",\n        \"width\": 4\n      },\n      {\n        \"room\": \"bed1\",\n        \"wall\": \"N\",\n        \"width\": 3\n      },\n      {\n        \"room\": \"bed1\",\n        \"wall\": \"W\",\n        \"width\": 3\n      },\n      {\n        \"room\": \"bath\",\n        \"wall\": \"N\",\n        \"width\": 2\n      },\n      {\n        \"room\": \"bed2\",\n        \"wall\": \"N\",\n        \"width\": 3\n      },\n      {\n        \"room\": \"bed2\",\n        \"wall\": \"E\",\n        \"width\": 3\n      }\n    ]\n  },\n  \"title\": \"Cottage\",\n  \"dpi\": 170\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "pm.collectionVariables.set('job_id', body.id);",
+              "pm.test('accepted', function () { pm.response.to.have.status(202); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Validate layout",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{api_key}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/v1/layouts/validate",
+        "description": "Returns 200 with ok false when the layout is structurally understood but invalid. A valid layout returns 200 with ok true. This example is intentionally incomplete.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"layout\": {\n    \"footprint\": {\n      \"width\": 10,\n      \"depth\": 10\n    },\n    \"rooms\": []\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Poll job",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{api_key}}"
+          }
+        ],
+        "url": "{{base_url}}/v1/jobs/{{job_id}}",
+        "description": "Send this request every two seconds until status is succeeded or failed. Do not submit the job again. Success includes layout, validation, expires_at, and relative files links."
+      }
+    },
+    {
+      "name": "Download PNG",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{api_key}}"
+          }
+        ],
+        "url": "{{base_url}}/v1/jobs/{{job_id}}/files/png",
+        "description": "PNG of a succeeded job. 409 if the job has not succeeded. 404 if it has expired."
+      }
+    },
+    {
+      "name": "Download SVG",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{api_key}}"
+          }
+        ],
+        "url": "{{base_url}}/v1/jobs/{{job_id}}/files/svg",
+        "description": "SVG of a succeeded job."
+      }
+    },
+    {
+      "name": "Download JSON",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{api_key}}"
+          }
+        ],
+        "url": "{{base_url}}/v1/jobs/{{job_id}}/files/json",
+        "description": "Layout JSON saved with the drawing."
+      }
+    }
+  ]
+}
