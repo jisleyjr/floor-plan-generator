@@ -50,12 +50,10 @@ def _migrate(url: str, *args: str) -> subprocess.CompletedProcess[str]:
 
 
 @pytest.fixture
-def settings(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Settings:
-    database = tmp_path / "queue.sqlite"
-    url = "sqlite:///" + database.as_posix()
-    monkeypatch.setenv("DATABASE_URL", url)
+def settings(backend_url: str, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Settings:
+    monkeypatch.setenv("DATABASE_URL", backend_url)
     monkeypatch.setenv("FLOORPLAN_DATA_DIR", str(tmp_path / "data"))
-    upgraded = _migrate(url, "upgrade", "head")
+    upgraded = _migrate(backend_url, "upgrade", "head")
     assert upgraded.returncode == 0, upgraded.stderr
     return get_settings()
 
@@ -76,10 +74,9 @@ def _gate(settings: Settings) -> tuple[int, int]:
 
 
 def test_migration_creates_the_queue_and_can_be_reapplied(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    backend_url: str, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    database = tmp_path / "migrated.sqlite"
-    url = "sqlite:///" + database.as_posix()
+    url = backend_url
     monkeypatch.setenv("DATABASE_URL", url)
 
     first = _migrate(url, "upgrade", "head")

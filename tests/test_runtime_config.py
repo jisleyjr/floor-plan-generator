@@ -246,6 +246,7 @@ def test_dependency_files_split_runtime_optional_and_dev() -> None:
     assert "pymysql" in mysql
     assert "pytest" in dev
     assert "httpx" in dev
+    assert "-r requirements-mysql.txt" in dev
 
 
 def test_secrets_runtime_and_test_artifacts_are_ignored() -> None:
