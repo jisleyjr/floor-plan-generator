@@ -11,11 +11,16 @@ from matplotlib.font_manager import FontProperties  # noqa: E402
 from matplotlib.patches import Arc, Polygon, Rectangle  # noqa: E402
 from matplotlib.textpath import TextPath  # noqa: E402
 
-from .geometry import TOL, fmt_ft, rect, side_segment  # noqa: E402
+from .geometry import TOL, Footprint, fmt_ft, rect, side_segment  # noqa: E402
 from .validate import validate_layout  # noqa: E402
 from .fixtures import draw_fixtures  # noqa: E402
 
 SCALE = 0.2          # inches of paper per foot
+MARGIN_LEFT = 7.0
+MARGIN_RIGHT = 4.0
+MARGIN_TOP = 7.0
+MARGIN_BOTTOM = 13.0
+MAX_RENDER_PIXELS = 25_000_000
 PT = SCALE * 72      # points per foot
 TE = 0.5             # exterior wall thickness (ft), drawn inward from the footprint line
 TI = 0.375           # interior wall thickness (ft), centred on the room boundary
@@ -67,15 +72,40 @@ def _side_of_seg(seg, W, D):
     return "W" if abs(seg.c) < TOL else ("E" if abs(seg.c - W) < TOL else None)
 
 
+class RenderTooLarge(ValueError):
+    """The drawing would be larger than ``MAX_RENDER_PIXELS``."""
+
+
+def render_pixel_count(width_ft: float, depth_ft: float, dpi: int) -> float:
+    """Pixel count of the figure ``render_layout`` would allocate."""
+    width_in = (width_ft + MARGIN_LEFT + MARGIN_RIGHT) * SCALE
+    height_in = (depth_ft + MARGIN_TOP + MARGIN_BOTTOM) * SCALE
+    return width_in * dpi * height_in * dpi
+
+
+def ensure_render_budget(layout: dict, dpi: int) -> None:
+    """Raise before a figure is allocated when the drawing is too large."""
+    footprint, _errors = Footprint.from_json(layout.get("footprint") if isinstance(layout, dict) else None)
+    if footprint is None or isinstance(dpi, bool) or not isinstance(dpi, int):
+        return
+    count = render_pixel_count(footprint.W, footprint.D, dpi)
+    if count > MAX_RENDER_PIXELS:
+        raise RenderTooLarge(
+            f"Rendering this plan at {dpi} dpi would be {count:,.0f} pixels, "
+            f"above the limit of {MAX_RENDER_PIXELS:,.0f}. Lower the dpi or use a smaller plan."
+        )
+
+
 def render_layout(layout: dict, out_base: str, dpi: int = 170, title: str | None = None,
                   formats=("png", "svg"), fixtures: bool = True) -> list[str]:
     rep = validate_layout(layout)
     if not rep.ok:
         raise ValueError(rep.format())
+    ensure_render_budget(layout, dpi)
     FP = rep.footprint
     W, D = FP.W, FP.D
     rooms = layout["rooms"]
-    ml, mr, mt, mb = 7.0, 4.0, 7.0, 13.0
+    ml, mr, mt, mb = MARGIN_LEFT, MARGIN_RIGHT, MARGIN_TOP, MARGIN_BOTTOM
     fig = plt.figure(figsize=((W + ml + mr) * SCALE, (D + mt + mb) * SCALE))
     ax = fig.add_axes([0, 0, 1, 1])
     ax.set_xlim(-ml, W + mr)

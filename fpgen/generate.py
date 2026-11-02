@@ -596,14 +596,11 @@ def _score(layout, plan: Plan, aspect):
     return s
 
 
-def generate_layout(beds: int = 3, baths: float = 2, sqft: float = 1600, seed: int = 1,
-                    laundry: bool | None = None, garage: int = 0, shape: str = "rect",
-                    garage_side: str | None = None) -> dict:
-    """Generate a valid layout dict for the given program. Deterministic per seed.
+def check_generation_request(beds, baths, sqft, garage=0, shape="rect", garage_side=None) -> None:
+    """Reject a program the generator cannot attempt.
 
-    garage: 0 (none) or 1/2/3 cars. shape: "rect" or "L". garage_side: "left"/"right"/None
-    (None = the hallway end, so the garage man door lands in the hall/laundry).
-    ``sqft`` is always the conditioned (living) area; the garage is reported separately.
+    These are the same checks the command line runs before it searches for a
+    layout. Callers can use them to refuse a job without generating one.
     """
     if beds < 1 or beds > 6:
         raise ValueError("beds must be between 1 and 6")
@@ -619,6 +616,18 @@ def generate_layout(beds: int = 3, baths: float = 2, sqft: float = 1600, seed: i
     if sqft < min_sqft:
         raise ValueError(f"{sqft:g} sq ft is too small for {beds} bed / {baths:g} bath "
                          f"(need at least ~{min_sqft:g} sq ft)")
+
+
+def generate_layout(beds: int = 3, baths: float = 2, sqft: float = 1600, seed: int = 1,
+                    laundry: bool | None = None, garage: int = 0, shape: str = "rect",
+                    garage_side: str | None = None) -> dict:
+    """Generate a valid layout dict for the given program. Deterministic per seed.
+
+    garage: 0 (none) or 1/2/3 cars. shape: "rect" or "L". garage_side: "left"/"right"/None
+    (None = the hallway end, so the garage man door lands in the hall/laundry).
+    ``sqft`` is always the conditioned (living) area; the garage is reported separately.
+    """
+    check_generation_request(beds, baths, sqft, garage, shape, garage_side)
     if laundry is None:
         laundry = sqft >= 1100
     if garage == 0 and shape == "rect":
