@@ -6,7 +6,9 @@ keys first so it does not leak the secret's length. Do not attach that
 dependency to the application itself.
 
 Submission validates the request and enqueues it. Generation and rendering
-happen in the worker, not inside the request.
+happen in the worker, not inside the request. Completed drawings are
+downloaded by job id and a fixed format name. Authenticated responses are
+marked ``Cache-Control: private, no-store``.
 """
 from __future__ import annotations
 
@@ -21,13 +23,19 @@ from typing import Any
 
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, Security
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-from fpgen.artifacts import LAYOUT_FILENAME, published_dir
+from fpgen.artifacts import (
+    ARTIFACT_FILES,
+    ARTIFACT_MEDIA_TYPES,
+    LAYOUT_FILENAME,
+    published_dir,
+    resolve_artifact,
+)
 from fpgen.db import get_engine
 from fpgen.generate import check_generation_request
-from fpgen.jobs import QueueFullError, enqueue, fetch_job
+from fpgen.jobs import SUCCEEDED, QueueFullError, enqueue, fetch_job
 from fpgen.render import RenderTooLarge, ensure_render_budget
 from fpgen.schemas import GenerateRequest, RenderRequest, ValidateRequest
 from fpgen.settings import ConfigurationError, Settings, get_settings
@@ -82,16 +90,19 @@ def create_app() -> FastAPI:
                 try:
                     size = int(declared)
                 except ValueError:
-                    return JSONResponse(
-                        status_code=422,
-                        content={"detail": {"code": "invalid_request", "message": "Content-Length must be an integer."}},
+                    return _private(
+                        request,
+                        JSONResponse(
+                            status_code=422,
+                            content={"detail": {"code": "invalid_request", "message": "Content-Length must be an integer."}},
+                        ),
                     )
                 if size > MAX_REQUEST_BYTES:
-                    return too_large
+                    return _private(request, too_large)
             body = await request.body()
             if len(body) > MAX_REQUEST_BYTES:
-                return too_large
-        return await call_next(request)
+                return _private(request, too_large)
+        return _private(request, await call_next(request))
 
     def require_bearer(
         credentials: HTTPAuthorizationCredentials | None = Security(_bearer),
@@ -180,6 +191,33 @@ def create_app() -> FastAPI:
             payload["error"] = {"code": job.error_code, "message": job.error_message}
         return payload
 
+    @application.get("/v1/jobs/{job_id}/files/{fmt}", dependencies=[Depends(require_bearer)])
+    def download_artifact(job_id: uuid.UUID, fmt: str, request: Request) -> FileResponse:
+        current = request.app.state.settings
+        filename = ARTIFACT_FILES.get(fmt)
+        if filename is None:
+            raise _missing_artifact()
+        job = fetch_job(job_id, settings=current)
+        if job is None:
+            raise HTTPException(
+                status_code=404,
+                detail={"code": "not_found", "message": "Job not found."},
+            )
+        if job.status != SUCCEEDED:
+            raise HTTPException(
+                status_code=409,
+                detail={"code": "not_ready", "message": f"Job is {job.status}."},
+            )
+        path = resolve_artifact(current, job.id, fmt)
+        if path is None:
+            raise _missing_artifact()
+        return FileResponse(
+            path,
+            media_type=ARTIFACT_MEDIA_TYPES[fmt],
+            filename=filename,
+            headers={"Cache-Control": "private, no-store"},
+        )
+
     @application.post("/v1/layouts/validate", dependencies=[Depends(require_bearer)])
     def validate_layout_route(body: ValidateRequest) -> dict[str, Any]:
         try:
@@ -238,6 +276,20 @@ def _iso(value) -> str | None:
     if value is None:
         return None
     return value.isoformat()
+
+
+def _private(request: Request, response: Response) -> Response:
+    """Keep authenticated results and downloads out of shared caches."""
+    if request.url.path != "/health":
+        response.headers["Cache-Control"] = "private, no-store"
+    return response
+
+
+def _missing_artifact() -> HTTPException:
+    return HTTPException(
+        status_code=404,
+        detail={"code": "not_found", "message": "Artifact is not available."},
+    )
 
 
 def _json_safe(value: object) -> object:

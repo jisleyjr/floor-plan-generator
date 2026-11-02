@@ -22,6 +22,11 @@ ARTIFACT_FILES = {
     "png": PNG_FILENAME,
     "svg": SVG_FILENAME,
 }
+ARTIFACT_MEDIA_TYPES = {
+    "json": "application/json",
+    "png": "image/png",
+    "svg": "image/svg+xml",
+}
 
 
 def artifacts_root(settings: Settings) -> Path:
@@ -68,6 +73,27 @@ def publish_staging(settings: Settings, job_id: uuid.UUID) -> Path:
         shutil.rmtree(destination)
     os.rename(staging, destination)
     return destination
+
+
+def resolve_artifact(settings: Settings, job_id: uuid.UUID, fmt: str) -> Path | None:
+    """Locate one published artifact.
+
+    ``fmt`` must be an allowlisted key. The filename is fixed, so a client
+    cannot supply a filesystem path. A symlink that resolves outside the job
+    directory is ignored.
+    """
+    filename = ARTIFACT_FILES.get(fmt)
+    if filename is None or Path(filename).name != filename:
+        return None
+    root = published_dir(settings, job_id).resolve()
+    candidate = root / filename
+    try:
+        resolved = candidate.resolve()
+    except OSError:
+        return None
+    if resolved.parent != root or not resolved.is_file():
+        return None
+    return resolved
 
 
 def remove_unreferenced_artifacts(settings: Settings, live_ids: set[uuid.UUID]) -> None:
